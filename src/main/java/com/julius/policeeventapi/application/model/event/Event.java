@@ -1,4 +1,4 @@
-package com.julius.policeeventapi.model;
+package com.julius.policeeventapi.application.model.event;
 import com.julius.policeeventapi.util.JsonUtil;
 import lombok.Data;
 import lombok.Setter;

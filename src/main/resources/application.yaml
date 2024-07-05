@@ -12,3 +12,14 @@ spring:
     mongodb:
       uri: ${POLICE_MONGO_URL:mongodb://localhost:27017/}
       database: "police-event-sweden"
+
+---
+
+spring:
+  data:
+    mongodb:
+      uri: "mongodb://localhost:27017/"
+      database: "police-event-sweden"
+  config:
+    activate:
+      on-profile: local
