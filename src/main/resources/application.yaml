@@ -1,16 +1,14 @@
+version: 0.0.1
+
+logging:
+  level:
+    org:
+      springframework:
+        boot:
+          autoconfigure:
+            logging: info
 spring:
   data:
     mongodb:
-      uri: "mongodb://localhost:27017/"
+      uri: ${POLICE_MONGO_URL:mongodb://localhost:27017/}
       database: "police-event-sweden"
-
----
-
-spring:
-  data:
-    mongodb:
-      uri: ""
-      database: "police-event-sweden"
-  config:
-    activate:
-      on-profile: live
