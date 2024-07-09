@@ -1,11 +1,13 @@
 package com.julius.policeeventapi.adapters.in.api;
 
+import com.julius.policeeventapi.application.model.event.Event;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/")
@@ -18,5 +20,10 @@ public class HomeController {
     @GetMapping
     public ResponseEntity<String> getBuildProperties() {
         return ResponseEntity.ok(buildProperties.getVersion());
+    }
+
+    @PostMapping("sync")
+    public ResponseEntity<String> sync() {
+        return ResponseEntity.ok("hello");
     }
 }
