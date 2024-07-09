@@ -19,18 +19,12 @@ public class EventController {
     public final PoliceEventService policeEventService;
 
     @GetMapping()
-    public ResponseEntity<Flux<String>> getEvents(@RequestParam(required = false) String date) {
-        Flux<String> events = policeEventService.getEvents(date).map(Object::toString);
-        return ResponseEntity.ok(events);
-    }
-
-    @PostMapping()
-    public ResponseEntity<Mono<EventWrapper>> saveEvents(@RequestBody EventWrapper eventWrappers) {
-        return ResponseEntity.ok(policeEventService.saveEventWrapper(eventWrappers));
+    public Mono<ResponseEntity<List<Event>>> getEvents(@RequestParam(required = false) String date) {
+        return policeEventService.getEvents(date).map(s -> s.events).map(ResponseEntity::ok);
     }
 
     @PostMapping("sync")
-    public ResponseEntity<Mono<List<Event>>> sync(@RequestParam String date) {
-        return ResponseEntity.ok(policeEventService.syncEvents(date));
+    public Mono<ResponseEntity<EventWrapper>> sync(@RequestParam String date) {
+        return policeEventService.syncEvents(date).map(ResponseEntity::ok);
     }
 }

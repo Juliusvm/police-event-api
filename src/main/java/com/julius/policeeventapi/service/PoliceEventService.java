@@ -23,20 +23,26 @@ public class PoliceEventService {
     }
 
 
-    public Flux<EventWrapper> getEvents(String date) {
-        return date != null ? eventRepository.findEventsById(date) : eventRepository.getEvents();
+    public Mono<EventWrapper> getEvents(String date) {
+        return eventRepository.findEventsById(date)
+                .flatMap(event -> {
+                    System.out.println("Event found: " + event);
+                    return Mono.just(event);
+                }).switchIfEmpty(Mono.defer(() -> {
+                    System.out.println("No event found for date: " + date);
+                    return syncEvents(date);
+                }));
     }
 
 
-    public Mono<List<Event>> syncEvents(String date) {
-       return policeApiClient.getPoliceEvents(date).flatMap(events -> {
-           EventWrapper eventWrapper = new EventWrapper();
-           eventWrapper.setEvents(events);
-           eventWrapper.set_id(date);
-           return saveEventWrapper(eventWrapper).map(s -> events);
-       });
+    public Mono<EventWrapper> syncEvents(String date) {
+        return policeApiClient.getPoliceEvents(date).flatMap(events -> {
+            EventWrapper eventWrapper = new EventWrapper();
+            eventWrapper.setEvents(events);
+            eventWrapper.set_id(date);
+            return saveEventWrapper(eventWrapper);
+        });
     }
-
 
 
 }
