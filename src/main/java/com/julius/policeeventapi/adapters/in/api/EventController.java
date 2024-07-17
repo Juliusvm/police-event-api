@@ -23,6 +23,23 @@ public class EventController {
         return policeEventService.getEvents(date).map(s -> s.events).map(ResponseEntity::ok);
     }
 
+    @GetMapping("by-type")
+    public Mono<ResponseEntity<List<Event>>> getEventsByType(@RequestParam(required = false) String type) {
+        return policeEventService.getEventsByType(type).map(ResponseEntity::ok);
+    }
+
+
+    @GetMapping("types")
+    public Mono<ResponseEntity<List<String>>> getEventTypes() {
+        return policeEventService.getEventTypes().map(ResponseEntity::ok);
+    }
+
+    @GetMapping("locations")
+    public Mono<ResponseEntity<List<String>>> getLocations() {
+        return policeEventService.getLocations().map(ResponseEntity::ok);
+    }
+
+
     @PostMapping("sync")
     public Mono<ResponseEntity<EventWrapper>> sync(@RequestParam String date) {
         return policeEventService.syncEvents(date).map(ResponseEntity::ok);
