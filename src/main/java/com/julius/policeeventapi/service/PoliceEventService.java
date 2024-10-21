@@ -30,7 +30,7 @@ public class PoliceEventService {
         return eventRepository.findEventsById(date)
                 .flatMap(event -> {
                     System.out.println("Event found: " + event);
-                    return Mono.just(event);
+                    return syncEvents(date);
                 }).switchIfEmpty(Mono.defer(() -> {
                     System.out.println("No event found for date: " + date);
                     return syncEvents(date);

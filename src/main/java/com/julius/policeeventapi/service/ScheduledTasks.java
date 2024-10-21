@@ -11,24 +11,23 @@ import java.time.ZoneId;
 import java.util.Date;
 
 @Component
-@Profile("sync")
 @RequiredArgsConstructor
 public class ScheduledTasks {
 
     private final PoliceEventService policeEventService;
-    Date date = Date.from(Instant.parse("2024-01-13T00:00:00Z"));
+    Date date = Date.from(Instant.parse("2024-09-17T00:00:00Z"));
 
     // Convert Date to LocalDate
     LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-
-    @Scheduled(fixedRate = 15000)
-    public void performTask() {
-
-        String currentDate = localDate.toString();
-        System.out.println(currentDate);
-        policeEventService.getEvents(currentDate).block();
-
-        localDate = localDate.plusDays(1);
-    }
+//
+//    @Scheduled(fixedRate = 15000)
+//    public void performTask() {
+//
+//        String currentDate = localDate.toString();
+//        System.out.println(currentDate);
+//        policeEventService.getEvents(currentDate).block();
+//
+//        localDate = localDate.plusDays(1);
+//    }
 }
